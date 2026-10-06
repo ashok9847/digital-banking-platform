@@ -1,0 +1,26 @@
+-- V1__init_account.sql: Initialize Account Schema
+
+CREATE TABLE IF NOT EXISTS accounts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    account_number VARCHAR(34) NOT NULL UNIQUE,
+    customer_id BIGINT NOT NULL,
+    account_type VARCHAR(20) NOT NULL,
+    balance DECIMAL(19, 4) NOT NULL DEFAULT 0.0000,
+    currency VARCHAR(3) NOT NULL DEFAULT 'USD',
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
+    version BIGINT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_account_number (account_number),
+    INDEX idx_customer_id (customer_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS account_limits (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    account_id BIGINT NOT NULL UNIQUE,
+    daily_transfer_limit DECIMAL(19, 4) NOT NULL DEFAULT 50000.0000,
+    single_tx_limit DECIMAL(19, 4) NOT NULL DEFAULT 10000.0000,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_account_limits_account FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: auth-service-route
+            uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+            predicates:
+              - Path=/api/auth/**
+          - id: customer-service-route
+            uri: ${CUSTOMER_SERVICE_URL:http://localhost:8082}
+            predicates:
+              - Path=/api/customers/**
+          - id: account-service-route
+            uri: ${ACCOUNT_SERVICE_URL:http://localhost:8083}
+            predicates:
+              - Path=/api/accounts/**
+          - id: transaction-service-route
+            uri: ${TRANSACTION_SERVICE_URL:http://localhost:8084}
+            predicates:
+              - Path=/api/transactions/**
+          - id: notification-service-route
+            uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8085}
+            predicates:
+              - Path=/api/notifications/**
+          - id: audit-service-route
+            uri: ${AUDIT_SERVICE_URL:http://localhost:8086}
+            predicates:
+              - Path=/api/audit/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{correlationId}] %-5level %logger{36} - %msg%n"
+  level:
+    org.springframework.cloud.gateway: INFO
+    com.banking: DEBUG

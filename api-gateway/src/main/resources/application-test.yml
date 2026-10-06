@@ -1,0 +1,12 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: api-gateway-test
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

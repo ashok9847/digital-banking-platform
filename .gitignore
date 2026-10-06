@@ -1,0 +1,50 @@
+# ==============================================================================
+# Git Ignore Configuration for Digital Banking Platform
+# ==============================================================================
+
+# Compiled binaries and build artifacts
+target/
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Environment and sensitive credential files
+.env
+.env.*
+!.env.example
+local-env.sh
+
+# IDE and Editor files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and runtime data
+*.log
+logs/
+mysql_data/
+zookeeper_data/
+kafka_data/
+
+# Temporary and dump files
+*.tmp
+*.bak
+*.swp
+*~
